@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Nov 26 01:09:06 GET 2022","Sat Nov 26 01:09:10 GET 2022","4158","chromium","","","","","search",""
+"passed","Sat Nov 26 01:09:00 GET 2022","Sat Nov 26 01:09:04 GET 2022","4114","chromium","","","","","forgot password ",""
+"failed","Sat Nov 26 01:09:04 GET 2022","Sat Nov 26 01:09:04 GET 2022","93","chromium","","","","","hranilische ",""
+"failed","Sat Nov 26 01:08:58 GET 2022","Sat Nov 26 01:08:58 GET 2022","84","chromium","","","","","login test",""
+"passed","Sat Nov 26 01:08:47 GET 2022","Sat Nov 26 01:08:58 GET 2022","11198","chromium","","","","","register test",""

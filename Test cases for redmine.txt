@@ -1,0 +1,46 @@
+id: 001
+Summary - Checking the functionality of the button "Регистрация" on the page  https://www.redmine.org/
+Preconditions - clear browser cache.
+Steps to reproduce : 
+1 open the page https://www.redmine.org/
+2 click the button "Регистрация"
+Expected Result - go to page https://www.redmine.org/account/register
+
+id: 002
+Summary - Checking the registration functionality on the page https://www.redmine.org/account/register
+Preconditions - Use valid values. The password must be at least 4 characters long.
+Steps to reproduce : 
+1 open the page https://www.redmine.org/
+2 click the button "Регистрация"
+3 fill in all fields
+4 click the button "Принять"
+Expected Result - registration is successful
+
+id: 003
+Summary - Checking the registration functionality on the page https://www.redmine.org/account/register-negative test
+Preconditions - Use random values
+Steps to reproduce : 
+1 open the page https://www.redmine.org/
+2 click the button "Регистрация"
+3 fill in not all fields marked with a star
+4 click the button "Принять"
+Expected Result - an informative window appears
+
+id: 004
+Summary - Checking the functionality of the button "Войти" on the page https://www.redmine.org/
+Preconditions - Use valid user name and password .
+Steps to reproduce : 
+1 open the page https://www.redmine.org/
+2 click the button "Войти"
+3 enter valid user name and password
+4 click the button "Вход"
+Expected Result - login successful
+
+id: 005
+Summary - checking the functionality of the tab "Статистика" in the storage "Хранилище" on the page https://www.redmine.org/
+Preconditions - Use valid user name and password .
+Steps to reproduce : 
+1 open the page https://www.redmine.org/
+2 click the button "Хранилище"
+3 click the button "Статистика"
+Expected Result - graphs of statistics are displayed
