@@ -1,67 +1,89 @@
-import { chromium, test } from '@playwright/test';
-import RegisterPage from "../pages/registerPage"
+import  test, { expect }  from '@playwright/test';
+import RegistrationPage from "../pages/registrationPage"
 import loginPage from "../pages/loginPage"
-import ForgotpasswordPage from "../pages/forgotpasswordPage"
-import HranilPage from "../pages/hranilPage"
+import PasswordRecoveryPage from "../pages/PasswordRecoveryPage"
+import StatisticsPage from "../pages/StatisticsPage"
 import SearchPage from "../pages/searchPage"
 
 const email = "Tur123@gmail.com";
 const password = "Vitaha123";
-test('register test', async ({ page }) => {
+
+test('Re_001 User registration verification test', async ({ page }) => {
   
-  const register = new RegisterPage(page);
+  const register = new RegistrationPage(page);
   await page.goto('https://www.redmine.org/account/register');
-  await register.enterUserNick("Vitaha");
-  await register.enterUserPassword(password);
-  await register.enterPasswordConfirm(password);
-  await register.enterUserName("Vitvitvit");
-  await register.enterLastName("Tur");
-  await register.enterEmail(email);
-  await register.clickAccept();
-  await page.waitForTimeout(3000);
+  await register.EnterUserNick("Vitaha");
+  await register.EnterUserPassword(password);
+  await register.EnterPasswordConfirm(password);
+  await register.EnterUserName("Vitvitvit");
+  await register.EnterLastName("Tur");
+  await register.EnterEmail(email);
+  await register.ClickAccept();
+
+  expect(await page.isVisible('[id="errorExplanation"]')).toBe(true)
 
 });
 
-test('login test', async ({ page }) => {
+test('Re_002 Validate user login with existing username and password', async ({ page }) => {
   
-  const register = new loginPage(page);
+  const login = new loginPage(page);
   await page.goto('https://www.redmine.org/login');
-  await register.enterUserNick("Vitaha");
-  await register.enterUserPassword(password);
-  await register.clickEnter();
-  await page.waitForTimeout(2000);
-
-});
-
-test('forgot password ', async ({ page }) => {
+  await login.EnterUserNickName("Vitaha");
+  await login.EnterUserPassword(password);
+  await login.ClickEnter();
   
-  const register = new ForgotpasswordPage(page);
-  await page.goto('https://www.redmine.org/');
-  await register.clickEnterLogin();
-  await register.clickEnter();
-  await register.enterEmail(email);
-  await register.clickAcceptEmail();
- 
-});
+  const locator = page.locator('[id="flash_error"]');
+  await expect(locator).toHaveText(/You haven't activated your account yet.*/);
 
-test('hranilische ', async ({ page }) => {
-  
-  const register = new HranilPage(page);
-  await page.goto('https://www.redmine.org/');
-  await register.clickHranilische();
-  await register.clickStatistics();
-  
-  await page.locator('[class="theme-Redmine project-redmine controller-repositories action-stats"]').screenshot({ path: 'screenshot.png' });
   
  
 });
 
-test('search', async ({ page }) => {
+test.describe('URL', ()=> {
+   test.beforeEach( async ({ page }) =>{
+   await page.goto('https://www.redmine.org/');
+});
+
+
+test('Re_003 User password recovery check ', async ({ page }) => {
   
-  const register = new SearchPage(page);
-  await page.goto('https://www.redmine.org/');
-  await register.clickSearch();
-  await register.addValue("test");
+  const passwordrec = new PasswordRecoveryPage(page);
+  //await page.goto('https://www.redmine.org/');
+  await passwordrec.ClickEnterLogin();
+  await passwordrec.ClickEnter();
+  await passwordrec.EnterEmail(email);
+  await passwordrec.ClickAcceptEmail();
+
+  const locator = page.locator('[id="flash_error"]');
+  await expect(locator).toHaveText(/You haven't activated your account yet. If you want to receive a new activation email, please click this link./);
+  
+ 
+});
+
+test('Re_004 Checking the availability of statistics graphs ', async ({ page }) => {
+  
+  const statistics = new StatisticsPage(page);
+  //await page.goto('https://www.redmine.org/');
+  await statistics.ClickHranilische();
+  await statistics.ClickStatistics();
+
+  await expect(page).toHaveURL(/.*statistics/);
+  
+  
+ 
+});
+
+test('Re_005 Checking the functionality of the search', async ({ page }) => {
+  
+  const search = new SearchPage(page);
+  //await page.goto('https://www.redmine.org/');
+  await search.ClickSearch();
+  await search.AddValue("test");
   await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(/.*search/);
+  
   
  });
+
+});
