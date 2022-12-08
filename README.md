@@ -10,10 +10,19 @@ ____
 + [X] Create README.md
 ___
 
-### :information_source: *Sources*
+### 
+To start the project, you need to install the allure-playwright. To do this, run the following command in the Visual Studio Code terminal:
 
-- google
-- channel of interns
-- mentor
+*npm i allure-playwright*
+
+Test results can be displayed in a Allure Report. To do this, you need to execute the following two commands:
+
+*npx allure generate my-allure-results -o allure-report --clean*
+
+*npx allure open allure-report*
+
+In order to open the project, you need to clone it from GitHub using the link [here](https://github.com/vitaliyy-turovskiyy/PlaywrightRedmineProject.git).
+
+
 
 ![LQ](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE_O-uZzS8KUkUpmitdhiCVnDeYDj4vtCliw&usqp=CAU)

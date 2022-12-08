@@ -1,14 +1,19 @@
 import { Page } from '@playwright/test';
-export default class searchPage{
+export default class SearchPage{
    
-    constructor(public page: Page){ }
+     constructor(public page: Page){    
+     }
 
-    async ClickSearch(){
-        await this.page.click('input[class="small"]')
-    }
-     async AddValue(value: string){
-        await this.page.locator('[id="q"]').type(value)
-    }
+         async clickSearch(){
+             await this.page.click('input[class="small"]')
+         }
+         async addValue(value: string){
+             await this.page.locator('[id="q"]').type(value)
+         }
+
+         checkAddValue(){
+            return this.page.locator('[id="q"]')
+         }
 
 
 }
