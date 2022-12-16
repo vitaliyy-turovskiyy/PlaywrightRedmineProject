@@ -1,48 +1,47 @@
 import  test, { expect }  from '@playwright/test';
-import RegistrationPage from "../pages/registrationPage"
+import RegistrationPage from "../pages/RegistrationPage"
 import loginPage from "../pages/loginPage"
 import PasswordRecoveryPage from "../pages/PasswordRecoveryPage"
 import GraphsPage from "../pages/GraphsPage"
-import SearchPage from "../pages/searchPage"
+import SearchPage from "../pages/SearchPage"
+import { password, email, UserName, LastName } from "../src/testData"
 
-const email = "Tur123@gmail.com";
-const password = "Vitaha123";
 
-   test('Re_001 Checking the possibility of user registration with existing login and email data', async ({ page }) => {
+  test('Re_001 The user checks the availability of the information window during registration using existing data', async ({ page }) => {
   
      const register = new RegistrationPage(page);
      await page.goto('https://www.redmine.org/account/register');
      await register.enterUserNick("Vitaha");
      await register.enterUserPassword(password);
      await register.enterPasswordConfirm(password);
-     await register.enterUserName("Vitvitvit");
-     await expect(register.checkUserName()).toHaveValue('Vitvitvit');
-     await register.enterLastName("Tur");
-     await expect(register.checkLastName()).toHaveValue('Tur');
+     await register.enterUserName(UserName);
+     await expect(register.checkUserName()).toHaveValue(UserName);
+     await register.enterLastName(LastName);
+     await expect(register.checkLastName()).toHaveValue(LastName);
      await register.enterEmail(email);
-     await expect(register.checkEmail()).toHaveValue('Tur123@gmail.com');
+     await expect(register.checkEmail()).toHaveValue(email);
      await register.clickAccept();
-     expect(await register.informMessageisDispl().isVisible()).toBe(true)
+     await expect( register.informMessageisDispl()).toHaveText(/Login has already been taken */);
    });
 
-   test('Re_002 Checking the user`s ability to log in to the system with a non-activated account', async ({ page }) => {
+  test('Re_002 Checking the user`s ability to log in to the system with a non-activated account', async ({ page }) => {
   
      const login = new loginPage(page);
      await page.goto('https://www.redmine.org/login');
      await login.enterUserNickName("Vitaha");
      await expect(login.nameisVisible()).toHaveValue('Vitaha');
      await login.enterUserPassword(password);
-     await expect(login.passwordisAdd()).toHaveValue('Vitaha123');
+     await expect(login.passwordisAdd()).toHaveValue(password);
      await login.clickEnter();
      await expect(login.checkInformationWindow()).toHaveText(/You haven't activated your account yet.*/);
      
    });
 
-   test.beforeEach( async ({ page }) =>{
+  test.beforeEach( async ({ page }) =>{
      await page.goto('https://www.redmine.org/');
    });
 
-   test('Re_003 Checking the possibility of password recovery with an inactive account ', async ({ page }) => {
+  test('Re_003 Checking the possibility of password recovery with an inactive account ', async ({ page }) => {
   
      const passwordrec = new PasswordRecoveryPage(page);
      await passwordrec.clickEnterLogin();
@@ -53,7 +52,7 @@ const password = "Vitaha123";
      await expect(passwordrec.checkInformWindow()).toHaveText(/You haven't activated your account yet. If you want to receive a new activation email, please click this link./);
    });
 
-   test('Re_004 Checking the availability of statistics graphs ', async ({ page }) => {
+  test('Re_004 Checking the availability of statistics graphs ', async ({ page }) => {
   
      const graphs = new GraphsPage(page);
      await graphs.clickStorage();
@@ -62,7 +61,7 @@ const password = "Vitaha123";
      await expect(page).toHaveURL('https://www.redmine.org/projects/redmine/repository/statistics');
    });
 
-   test('Re_005 Checking the functionality of the search field', async ({ page }) => {
+  test('Re_005 Checking the functionality of the search field', async ({ page }) => {
   
      const search = new SearchPage(page);
      await search.clickSearch();

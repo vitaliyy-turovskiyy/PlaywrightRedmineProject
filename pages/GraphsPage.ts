@@ -1,15 +1,21 @@
-import { Page } from '@playwright/test';
-export default class GraphsPage{
-   
-    constructor(public page: Page){ 
-    }
-    
-       async clickStorage(){
-             await  this.page.click('[class="repository"]')
-       }
-    
-       async clickStatistics(){
-             await this.page.click('[href="/projects/redmine/repository/statistics"]')
-       }
+import { expect, Locator, Page } from '@playwright/test';
 
+export default class GraphsPage{
+  readonly page: Page;
+  readonly Storage: Locator;
+  readonly Statistics: Locator;
+
+  constructor( page: Page){ 
+    this.page = page;
+    this.Storage = page.locator('[class="repository"]')
+    this.Statistics = page.locator('[href="/projects/redmine/repository/statistics"]')
+  }
+    
+  async clickStorage(){
+    await  this.Storage.click()
+  }
+    
+  async clickStatistics(){
+    await this.Statistics.click()
+  }
 }

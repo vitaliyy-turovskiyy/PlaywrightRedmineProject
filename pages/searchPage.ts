@@ -1,19 +1,25 @@
-import { Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
+
 export default class SearchPage{
+   readonly page: Page;
+   readonly fieldSearch: Locator;
+   readonly enterValue: Locator;
    
-     constructor(public page: Page){    
-     }
+   constructor( page: Page){ 
+      this.page = page;
+      this.fieldSearch = page.locator('input[class="small"]')    
+      this.enterValue = page.locator('[id="q"]')    
+   }
 
-         async clickSearch(){
-             await this.page.click('input[class="small"]')
-         }
-         async addValue(value: string){
-             await this.page.locator('[id="q"]').type(value)
-         }
+   async clickSearch(){
+      await this.fieldSearch.click()
+   }
 
-         checkAddValue(){
-            return this.page.locator('[id="q"]')
-         }
+   async addValue(value: string){
+      await this.enterValue.type(value)
+   }
 
-
+   checkAddValue(){
+      return this.enterValue
+   }
 }

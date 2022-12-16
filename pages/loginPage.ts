@@ -1,33 +1,41 @@
-import { Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
+
 export default class loginPage{
+    readonly page: Page;
+    readonly UserNickName: Locator;
+    readonly UserPassword: Locator;
+    readonly EnterButton: Locator;
+    readonly InformationWindow: Locator;
    
-     constructor(public page: Page){    
-     }
+    constructor( page: Page){ 
+        this.page = page;
+        this.UserNickName = page.locator("td #username")   
+        this.UserPassword = page.locator("#password")   
+        this.EnterButton = page.locator("input[type=submit]")   
+        this.InformationWindow = page.locator('[id="flash_error"]')   
+    }
 
-         async enterUserNickName(userNick: string){
-             await this.page.locator("td #username")
-             .type(userNick)
-         }
+    async enterUserNickName(userNick: string){
+        await this.UserNickName.type(userNick)
+    }
 
-         async enterUserPassword(userPassword: string){
-             await this.page.locator("#password")
-             .type(userPassword)
-         }
+    async enterUserPassword(userPassword: string){
+        await this.UserPassword.type(userPassword)
+    }
   
-         async clickEnter(){
-             await  this.page.click("input[type=submit]")
-         }
+    async clickEnter(){
+        await this.EnterButton.click()
+    }
 
-         checkInformationWindow(){
-             return this.page.locator('[id="flash_error"]')
-         }
+    nameisVisible(){
+        return this.UserNickName
+    }
 
-         nameisVisible(){
-             return this.page.locator("td #username")
-        }
-
-        passwordisAdd(){
-            return this.page.locator("#password")
-       }
-       
+    passwordisAdd(){
+        return this.UserPassword
+    }
+    
+    checkInformationWindow(){
+        return this.InformationWindow
+    }
 }
